@@ -1,56 +1,25 @@
 # https://pl.spoj.com/problems/JSZYCER/
-# text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-# print(list(text))
-# alphabet = list(map(ord, text))
-# print(alphabet)
-# print(list(map(chr, alphabet)))
-# # for i in alphabet:
-# #     print(ord(i))
-# # print(ord(alphabet))
-# number = 123
-# print(list(map(int,str(number))))
-# print(text[1])
-# print(len(text))
-# print(text * 3)
-def Szyfrowanie(character_nubmer, nubmer):
-    new_character_number = character_nubmer + nubmer
-    if new_character_number > 90:
-        new_character_number = new_character_number - 26
-    return new_character_number
-
-def Deszyfrowanie(character_nubmer, nubmer):
-    new_character_number = character_nubmer - nubmer
-    if new_character_number < 65:
-        new_character_number = new_character_number + 26
-    return new_character_number
-
-def extendCode(characterslengdht,code):
-    iterations = int(round(characterslengdht/len(code),0))
-    if iterations > characterslengdht/len(code):
-        code = code*iterations
+import sys
+def Szyfrowanie(character_nubmer):
+    if character_nubmer == 32:
+        new_character_number = 32
+    elif character_nubmer == 10:
+        new_character_number = 10
     else:
-        code = code*(iterations+1)
-    return code
+        new_character_number = character_nubmer + 3
+        if new_character_number > 90:
+            new_character_number = new_character_number - 26
+    return new_character_number
 
-def Cezar(mode, text, code):
-    try:
-        int(code)
-    except:
-        return "Wrong Data Type, possibele type Integer list without spaces"
-    if len(text) > len(code):
-        code = extendCode(len(text), code)
+def Cezar(text, code=3):
     text_list = list(map(ord, text))
-    number_list = list(map(int,code))
-    if mode == "SZYFRUJ":
-        text_list = list(map(Szyfrowanie, text_list,number_list))
-        return "".join(list(map(chr, text_list)))
-    elif mode == "DESZYFRUJ":
-        text_list = list(map(Deszyfrowanie, text_list,number_list))
-        return "".join(list(map(chr, text_list)))
-    else:
-        return "wrong Mode, possible values: SZYFRUJ or DESZYFRUJ"
+    text_list = list(map(Szyfrowanie, text_list))
+    return "".join(list(map(chr, text_list)))
+text = sys.stdin.read()
+print(Cezar(text))
+# text = ''
+# a = input()
+# while a != '':
+#     text+=a
+#     a = input()
 
-# print(Cezar("SZYFRUJ", "ZZZZZZZZZZ", "111112"))
-# print(Cezar("DESZYFRUJ", "AAAA", "111112"))
-# print(Cezar("DESZYFRUJ", "AAAA", "ZWH"))
-# print(Cezar("XD", "AAAA", "111112"))
